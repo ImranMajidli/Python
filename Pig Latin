@@ -1,0 +1,66 @@
+# Pig Latin is a silly made-up language that alters English words. If a word begins with a vowel, the word yay is
+# added to the end of it. If a word begins with a consonant or consonant cluster (like ch or gr), that consonant
+# or cluster is moved to the end of the word followed by ay.
+
+# Enter the English message to translate into Pig Latin:
+# My name is AL SWEIGART and I am 4,000 years old.
+# Ymay amenay isyay ALYAY EIGARTSWAY andyay Iyay amyay 4,000 yearsyay oldyay
+
+print('Enter the English message to translate into Pig Latin')
+message = input()
+
+VOWELS = ('a', 'e', 'i', 'o', 'u', 'y')
+
+pigLatin = []
+
+# Going through every word in the message,updating it and appending to the pigLatin
+for word in message.split():
+
+    # Checking if the last symbol of the word is ',' or '.', or smth else in order to take it and put at the end of the updated word
+    not_letter_or_number = ''
+    if not word[-1].isalnum():
+        not_letter_or_number = word[-1]
+        word = word[:(len(word) - 1)]
+
+    # Remembering that the word was upper or titled
+    wasUpper = word.isupper()
+    wasTitle = word.istitle()
+    word = word.lower()
+    print(word)
+
+    # Checking if there is a number in the word, if yes, then leave the word as it is
+    a = False
+    for i in word:
+        if i.isdecimal():
+            a = True
+    if a:
+        pigLatin.append(word)
+        continue
+
+    # Checking if the first letter is vowel or consonant(s). And then modify the word accordingly
+    if word[0] in VOWELS:
+        word += 'yay'
+    elif word[0] not in VOWELS:
+        count = 0
+        temp = ''
+        for i in word:
+            if i not in VOWELS:
+                temp += i
+                count += 1
+            else:
+                break
+        word = word[count:] + temp + 'ay'
+
+    # Converting back to the original state of the word, i.e. titled and uppercase
+    if wasTitle:
+        word = word.title()
+    elif wasUpper:
+        word = word.upper()
+
+    # Adding the word + (',' or '.' or smth else) to the list
+    pigLatin.append(word + not_letter_or_number)
+
+# Converting the list to the string
+final_text = ' '.join(pigLatin)
+
+print(final_text)
