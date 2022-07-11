@@ -1,0 +1,23 @@
+"""This program will create a back-and-forth, zigzag pattern
+until the user stops it by pressing"""
+
+import time, keyboard
+
+IndentIncreasing = True
+indent=0
+
+while True:
+    if IndentIncreasing:
+        indent+=1
+        print((' '*indent) + ('*'*8))
+        time.sleep(1)
+        if indent==20:
+            IndentIncreasing=False
+    else:
+        indent-=1
+        print((' ' * indent) + ('*' * 8))
+        time.sleep(1)
+        if indent==0:
+            IndentIncreasing=True
+    if keyboard.is_pressed('q'):
+        break
